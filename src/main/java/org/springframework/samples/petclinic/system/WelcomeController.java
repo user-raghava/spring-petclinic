@@ -27,8 +27,4 @@ class WelcomeController {
 		return "welcome";
 	}
 
-	@GetMapping("/message")
-	public String message() {
-		return "welcome";
-	}
 }
