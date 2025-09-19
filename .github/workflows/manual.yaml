@@ -27,9 +27,18 @@ jobs:
                 distribution: 'temurin'  # Use Eclipse Temurin distribution
                 java-version: ${{ matrix.java }}   # Set Java version to 21
                 cache: ''   # Enable Maven dependency caching
+                
+          - name: Initialize CodeQL  # Step 3: Initialize CodeQL analysis, prepares CodeQL and sets up DB.
+            uses: github/codeql-action/init@v3 
+            with:
+              languages: java
+            
+          - name: Run Maven command  # Step 3: Run Maven command specified in repository variable 'GOAL'
+            run: mvn ${{ vars.GOAL  }}  
 
-          - name: build package
-            run: mvn ${{ vars.GOAL  }}  # Step 3: Run Maven command specified in repository variable 'GOAL'
+          - name: Perform CodeQL Analysis  # Step 4: Perform CodeQL analysis on the codebase
+            uses: github/codeql-action/analyze@v3
+
           - name: publish test results  # Step 4: Publish test results using a third-party action
             uses: EnricoMi/publish-unit-test-result-action@v2  
             with:  
