@@ -10,6 +10,7 @@ permissions:  # Define permissions for the workflow
   contents: read  # Read access to repository contents
   checks: write   # Write access to checks
   pull-requests: write  # Write access to pull requests
+  security-events: write  # Write access to security events
 
 jobs:
     manual:   # Job name (identifier for this job)
