@@ -7,10 +7,11 @@ inputs:
     default: '17'
 
 runs:
-   using: 'composite'
-    steps:
+   using: composite
+   steps:
       - uses: actions/setup-java@v5  # Step 1: Set up Java environment
         with:
-            distribution: 'temurin'  # Use Eclipse Temurin distribution
-            java-version: ${{ inputs.java-version }}   # Set Java version to 21
-            cache: maven   # Enable Maven dependency caching
+          distribution: 'temurin'  # Use Eclipse Temurin distribution
+          java-version: ${{ inputs.java-version }}   # Set Java version to 21
+          cache: 'maven'  # Enable Maven dependency caching
+      
