@@ -14,7 +14,7 @@ permissions:  # Define permissions for the workflow
 
 jobs:
   call-reusable:
-        uses: user-raghava/reuseable-repo/.github/workflows/ci-template.yml@v1
+        uses: user-raghava/reuseable-repo/.github/workflows/ci-template.yml@main
         with:
           java-version: '21'
-          agents: 'ubuntu-latest'
+          agent: 'ubuntu-latest'
