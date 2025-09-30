@@ -1,0 +1,13 @@
+name: Build using Maven
+description: 'Build the project using Maven'
+inputs:
+  goal:
+    description: 'Maven goal to execute (e.g., clean install)'
+    required: false
+    default: 'package'
+
+runs:
+   using: 'composite'
+    steps:
+        - name: Run Maven Goal
+          run: mvn ${{ inputs.goal }}  # Step 1: Run the specified Maven goal

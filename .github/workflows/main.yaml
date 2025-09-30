@@ -1,6 +1,5 @@
-# spring-petclinic/.github/workflows/main.yml
-name: Spring-PetClinic
-
+---
+name: Manual maven steps for ci
 on:
     pull_request:
       branches: 
@@ -11,10 +10,39 @@ permissions:  # Define permissions for the workflow
   contents: read  # Read access to repository contents
   checks: write   # Write access to checks
   pull-requests: write  # Write access to pull requests
+  security-events: write  # Write access to security events
 
 jobs:
-  call-reusable:
-        uses: user-raghava/reuseable-repo/.github/workflows/ci-template.yml@main
-        with:
-          java-version: '21' # If the caller does provide java-version, that value overrides the default.
-          agent: 'ubuntu-latest'
+    manual:   # Job name (identifier for this job)
+        runs-on: ubuntu-24.04
+
+        steps:  # Steps run sequentially inside the job
+          - uses: actions/checkout@v5    # Step 1: Check out repository code into the runner
+          - uses: .github/actions/setup-java  # Step 2: Set up Java environment
+            with:
+                java-version: '21'  
+                
+          - name: Initialize CodeQL  # Step 3: Initialize CodeQL analysis, prepares CodeQL and sets up DB.
+            uses: github/codeql-action/init@v3 
+            with:
+                languages: java
+            
+          - name: Run Maven command  # Step 3: Run Maven command specified in repository variable 'GOAL'
+            uses: ./.github/actions/build-maven  # Use custom action to run Maven commands
+            with:
+                goal: package  # Maven goal to execute, e.g., clean install
+
+          - name: Perform CodeQL Analysis  # Step 4: Perform CodeQL analysis on the codebase
+            uses: github/codeql-action/analyze@v3
+
+          - name: publish test results  # Step 4: Publish test results using a third-party action
+            uses: EnricoMi/publish-unit-test-result-action@v2  
+            with:  
+                files: |
+                  **/target/surefire-reports/*.xml
+
+          - name: Uploading packaged jar files  # Step 5: Upload packaged JAR files as workflow artifacts
+            uses: actions/upload-artifact@v4   # Use GitHub's upload-artifact action
+            with:
+                name: spring-petclinic.jar  # Name of the artifact
+                path: '**/target/*.jar'  # Path to the JAR files to upload

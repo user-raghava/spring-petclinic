@@ -1,0 +1,16 @@
+name: seup-java
+description: 'Set up Java environment'
+inputs:
+  java-version:
+    description: 'Java version to set up (e.g., 11, 17, 21)'
+    required: false
+    default: '17'
+
+runs:
+   using: 'composite'
+    steps:
+      - uses: actions/setup-java@v5  # Step 1: Set up Java environment
+        with:
+            distribution: 'temurin'  # Use Eclipse Temurin distribution
+            java-version: ${{ inputs.java-version }}   # Set Java version to 21
+            cache: maven   # Enable Maven dependency caching
