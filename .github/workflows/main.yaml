@@ -16,5 +16,5 @@ jobs:
   call-reusable:
         uses: user-raghava/reuseable-repo/.github/workflows/ci-template.yml@main
         with:
-          java-version: '21'
+          java-version: '21' # If the caller does provide java-version, that value overrides the default.
           agent: 'ubuntu-latest'
