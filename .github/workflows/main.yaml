@@ -17,4 +17,4 @@ jobs:
         uses: user-raghava/reuseable-repo/.github/workflows/ci-template.yml@v1
         with:
           java-version: '21'
-          agent: 'ubuntu-latest
+          agent: 'ubuntu-latest'
