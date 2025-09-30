@@ -10,4 +10,5 @@ runs:
    using: 'composite'
    steps:
       - name: Run Maven Goal
+        shell: bash
         run: mvn ${{ inputs.goal }}  # Step 1: Run the specified Maven goal
