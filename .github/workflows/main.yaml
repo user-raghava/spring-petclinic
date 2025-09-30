@@ -1,0 +1,21 @@
+# spring-petclinic/.github/workflows/main.yml
+name: Spring-PetClinic
+
+on:
+    pull_request:
+      branches: 
+        - main
+    workflow_dispatch:  # Allows manual trigger of this workflow from GitHub UI
+
+permissions:  # Define permissions for the workflow
+  contents: read  # Read access to repository contents
+  checks: write   # Write access to checks
+  pull-requests: write  # Write access to pull requests
+
+jobs:
+  call-reusable:
+        uses: user-raghava/reuseable-repo/.github/workflows/ci-template.yaml@v1
+        with:
+          java-version: '21'
+          agent: 'ubuntu-latest'
+   
